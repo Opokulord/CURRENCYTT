@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Vision Pro - Accessibility Check</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 2rem;
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .yes-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .no-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Currency Vision Pro</h1>
+        <p>Do you require accessibility features for visual impairment?</p>
+        <div class="button-group">
+            <button class="yes-btn" onclick="redirectToBlindVersion()">Yes, I need accessibility features</button>
+            <button class="no-btn" onclick="redirectToMainVersion()">No, I don't need accessibility features</button>
+        </div>
+    </div>
+
+    <script>
+        function redirectToBlindVersion() {
+            window.location.href = 'blind.html';
+        }
+
+        function redirectToMainVersion() {
+            window.location.href = 'index.html';
+        }
+
+        // Check for saved preference
+        window.onload = function() {
+            const savedPreference = localStorage.getItem('accessibilityPreference');
+            if (savedPreference === 'blind') {
+                redirectToBlindVersion();
+            } else if (savedPreference === 'main') {
+                redirectToMainVersion();
+            }
+        }
+    </script>
+</body>
+</html> 

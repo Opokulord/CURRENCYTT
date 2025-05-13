@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Vision Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="real.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.1/tesseract.min.js"></script>
+    <script src="voiceRecognition.js"></script>
+    <script src="imageCapture.js"></script>
+    <script src="others.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Translations object
+        const translations = {
+            en: {
+                // Navigation
+                home: "Home",
+                features: "Features",
+                converter: "Converter",
+                about: "About",
+                logout: "Logout",
+                darkMode: "Dark Mode",
+                language: "Language",
+                quietMode: "Quiet Mode",
+                
+                // Home Section
+                homeTitle: "Currency Vision Pro",
+                homeSubtitle: "Experience the future of currency conversion with real-time rates, advanced technology, and global coverage.",
+                globalCoverage: "Global Coverage",
+                globalCoverageDesc: "Access exchange rates for over 180 currencies and 50 cryptocurrencies worldwide.",
+                voiceRecognition: "Voice Recognition",
+                voiceRecognitionDesc: "Convert currencies hands-free with our advanced voice recognition technology.",
+                cameraOCR: "Camera OCR",
+                cameraOCRDesc: "Scan currency notes or text to instantly input amounts for conversion.",
+                realTimeUpdates: "Real-time Updates",
+                realTimeUpdatesDesc: "Get the latest exchange rates updated every minute.",
+                aiInsights: "AI-Powered Insights",
+                aiInsightsDesc: "Machine learning algorithms provide predictive analytics and smart recommendations.",
+                trendAnalysis: "Trend Analysis",
+                trendAnalysisDesc: "Analyze historical trends and make informed financial decisions.",
+                
+                // Global Impact Section
+                globalImpact: "Our Global Impact",
+                currenciesSupported: "Currencies Supported",
+                cryptocurrenciesIncluded: "Cryptocurrencies Included",
+                usersWorldwide: "Users Worldwide",
+                customerSupport: "Customer Support",
+                
+                // Converter Section
+                currencyConverter: "Currency Converter",
+                converterSubtitle: "Elegant, accurate, and global currency conversion",
+                enterAmount: "Enter amount",
+                convert: "Convert",
+                scanUpload: "Scan/Upload",
+                swapCurrencies: "Swap currencies",
+                selectSourceCurrency: "Select source currency",
+                selectTargetCurrency: "Select target currency",
+                
+                // Features Section
+                realTimeData: "Real-Time Currency Data",
+                realTimeDataDesc: "Access live rates for 180+ currencies and 50 cryptocurrencies, updated every minute.",
+                multiCurrencyCalc: "Multi-Currency Calculator",
+                multiCurrencyCalcDesc: "Includes historical exchange rate data for smarter decision-making and comparisons.",
+                voiceRecognitionFeature: "Voice Recognition",
+                voiceRecognitionFeatureDesc: "Convert currencies hands-free with advanced speech-to-text processing.",
+                aiPoweredConversion: "AI-Powered Conversion",
+                aiPoweredConversionDesc: "Leverages machine learning for predictive analytics and smart suggestions.",
+                responsiveDesign: "Responsive Design",
+                responsiveDesignDesc: "Seamlessly switch between devices with a fully responsive layout and mobile apps.",
+                restfulAPI: "RESTful API",
+                restfulAPIDesc: "Integrate our powerful currency services into your own applications with ease.",
+                historicalData: "Historical Data Insights",
+                historicalDataDesc: "Analyze historical data trends to make informed financial decisions.",
+                emailAlerts: "Email Alerts",
+                emailAlertsDesc: "Receive real-time alerts on currency fluctuations and conversion rates.",
+                customizableDashboard: "Customizable Dashboard",
+                customizableDashboardDesc: "Personalize your dashboard to see the currencies and metrics that matter to you.",
+                
+                // About Section
+                aboutTitle: "Currency Vision Pro",
+                aboutSubtitle: "Transforming Global Currency Experiences",
+                aboutDescription: "We are pioneering the future of currency conversion through innovative technology and user-centric design. Our platform bridges financial gaps, empowering users with real-time, accurate, and intelligent currency solutions.",
+                ourMission: "Our Mission",
+                ourMissionDesc: "Democratize financial information and make currency conversion seamless and accessible for everyone.",
+                globalReach: "Global Reach",
+                globalReachDesc: "Supporting 180+ currencies and serving users across 50+ countries with cutting-edge technology.",
+                innovation: "Innovation",
+                innovationDesc: "Continuously evolving with AI, machine learning, and real-time data processing technologies.",
+                meetOurInnovators: "Meet Our Innovators",
+                leadDeveloper: "Lead Developer",
+                frontendDeveloper: "Frontend Developer",
+                backendDeveloper: "Backend Developer",
+                
+                // Footer
+                allRightsReserved: "All rights reserved.",
+                privacyPolicy: "Privacy Policy",
+                termsOfService: "Terms of Service"
+            },
+            es: {
+                // Navigation
+                home: "Inicio",
+                features: "Características",
+                converter: "Conversor",
+                about: "Acerca de",
+                logout: "Cerrar sesión",
+                darkMode: "Modo oscuro",
+                language: "Idioma",
+                quietMode: "Modo silencioso",
+                
+                // Home Section
+                homeTitle: "Currency Vision Pro",
+                homeSubtitle: "Experimenta el futuro de la conversión de divisas con tasas en tiempo real, tecnología avanzada y cobertura global.",
+                globalCoverage: "Cobertura Global",
+                globalCoverageDesc: "Accede a tasas de cambio para más de 180 monedas y 50 criptomonedas en todo el mundo.",
+                voiceRecognition: "Reconocimiento de Voz",
+                voiceRecognitionDesc: "Convierte divisas sin usar las manos con nuestra tecnología avanzada de reconocimiento de voz.",
+                cameraOCR: "Cámara OCR",
+                cameraOCRDesc: "Escanea billetes o texto para ingresar instantáneamente cantidades para la conversión.",
+                realTimeUpdates: "Actualizaciones en Tiempo Real",
+                realTimeUpdatesDesc: "Obtén las últimas tasas de cambio actualizadas cada minuto.",
+                aiInsights: "Análisis con IA",
+                aiInsightsDesc: "Los algoritmos de aprendizaje automático proporcionan análisis predictivo y recomendaciones inteligentes.",
+                trendAnalysis: "Análisis de Tendencias",
+                trendAnalysisDesc: "Analiza tendencias históricas y toma decisiones financieras informadas.",
+                
+                // Global Impact Section
+                globalImpact: "Nuestro Impacto Global",
+                currenciesSupported: "Monedas Soportadas",
+                cryptocurrenciesIncluded: "Criptomonedas Incluidas",
+                usersWorldwide: "Usuarios en el Mundo",
+                customerSupport: "Soporte al Cliente",
+                
+                // Converter Section
+                currencyConverter: "Conversor de Divisas",
+                converterSubtitle: "Conversión de divisas elegante, precisa y global",
+                enterAmount: "Ingrese cantidad",
+                convert: "Convertir",
+                scanUpload: "Escanear/Subir",
+                swapCurrencies: "Intercambiar divisas",
+                selectSourceCurrency: "Seleccionar moneda de origen",
+                selectTargetCurrency: "Seleccionar moneda de destino",
+                
+                // Features Section
+                realTimeData: "Datos de Divisas en Tiempo Real",
+                realTimeDataDesc: "Accede a tasas en vivo para más de 180 monedas y 50 criptomonedas, actualizadas cada minuto.",
+                multiCurrencyCalc: "Calculadora Multi-Moneda",
+                multiCurrencyCalcDesc: "Incluye datos históricos de tasas de cambio para una toma de decisiones más inteligente y comparaciones.",
+                voiceRecognitionFeature: "Reconocimiento de Voz",
+                voiceRecognitionFeatureDesc: "Convierte divisas sin usar las manos con procesamiento avanzado de voz a texto.",
+                aiPoweredConversion: "Conversión con IA",
+                aiPoweredConversionDesc: "Utiliza aprendizaje automático para análisis predictivo y sugerencias inteligentes.",
+                responsiveDesign: "Diseño Responsivo",
+                responsiveDesignDesc: "Cambia sin problemas entre dispositivos con un diseño completamente responsivo y aplicaciones móviles.",
+                restfulAPI: "API RESTful",
+                restfulAPIDesc: "Integra nuestros potentes servicios de divisas en tus propias aplicaciones con facilidad.",
+                historicalData: "Análisis de Datos Históricos",
+                historicalDataDesc: "Analiza tendencias de datos históricos para tomar decisiones financieras informadas.",
+                emailAlerts: "Alertas por Email",
+                emailAlertsDesc: "Recibe alertas en tiempo real sobre fluctuaciones de divisas y tasas de conversión.",
+                customizableDashboard: "Panel Personalizable",
+                customizableDashboardDesc: "Personaliza tu panel para ver las divisas y métricas que te importan.",
+                
+                // About Section
+                aboutTitle: "Currency Vision Pro",
+                aboutSubtitle: "Transformando Experiencias Globales de Divisas",
+                aboutDescription: "Estamos pioneros en el futuro de la conversión de divisas a través de tecnología innovadora y diseño centrado en el usuario. Nuestra plataforma une brechas financieras, empoderando a los usuarios con soluciones de divisas en tiempo real, precisas e inteligentes.",
+                ourMission: "Nuestra Misión",
+                ourMissionDesc: "Democratizar la información financiera y hacer que la conversión de divisas sea fluida y accesible para todos.",
+                globalReach: "Alcance Global",
+                globalReachDesc: "Soportando más de 180 monedas y sirviendo a usuarios en más de 50 países con tecnología de vanguardia.",
+                innovation: "Innovación",
+                innovationDesc: "Evolucionando continuamente con IA, aprendizaje automático y tecnologías de procesamiento de datos en tiempo real.",
+                meetOurInnovators: "Conoce a Nuestros Innovadores",
+                leadDeveloper: "Desarrollador Principal",
+                frontendDeveloper: "Desarrollador Frontend",
+                backendDeveloper: "Desarrollador Backend",
+                
+                // Footer
+                allRightsReserved: "Todos los derechos reservados.",
+                privacyPolicy: "Política de Privacidad",
+                termsOfService: "Términos de Servicio"
+            },
+            fr: {
+                // Navigation
+                home: "Accueil",
+                features: "Fonctionnalités",
+                converter: "Convertisseur",
+                about: "À propos",
+                logout: "Déconnexion",
+                darkMode: "Mode sombre",
+                language: "Langue",
+                quietMode: "Mode silencieux",
+                
+                // Home Section
+                homeTitle: "Currency Vision Pro",
+                homeSubtitle: "Découvrez l'avenir de la conversion de devises avec des taux en temps réel, une technologie avancée et une couverture mondiale.",
+                globalCoverage: "Couverture Mondiale",
+                globalCoverageDesc: "Accédez aux taux de change pour plus de 180 devises et 50 cryptomonnaies dans le monde entier.",
+                voiceRecognition: "Reconnaissance Vocale",
+                voiceRecognitionDesc: "Convertissez les devises sans les mains grâce à notre technologie avancée de reconnaissance vocale.",
+                cameraOCR: "Caméra OCR",
+                cameraOCRDesc: "Scannez des billets ou du texte pour saisir instantanément des montants à convertir.",
+                realTimeUpdates: "Mises à Jour en Temps Réel",
+                realTimeUpdatesDesc: "Obtenez les derniers taux de change mis à jour chaque minute.",
+                aiInsights: "Analyses IA",
+                aiInsightsDesc: "Les algorithmes d'apprentissage automatique fournissent des analyses prédictives et des recommandations intelligentes.",
+                trendAnalysis: "Analyse des Tendances",
+                trendAnalysisDesc: "Analysez les tendances historiques et prenez des décisions financières éclairées.",
+                
+                // Global Impact Section
+                globalImpact: "Notre Impact Mondial",
+                currenciesSupported: "Devises Supportées",
+                cryptocurrenciesIncluded: "Cryptomonnaies Incluses",
+                usersWorldwide: "Utilisateurs dans le Monde",
+                customerSupport: "Support Client",
+                
+                // Converter Section
+                currencyConverter: "Convertisseur de Devises",
+                converterSubtitle: "Conversion de devises élégante, précise et mondiale",
+                enterAmount: "Entrez le montant",
+                convert: "Convertir",
+                scanUpload: "Scanner/Télécharger",
+                swapCurrencies: "Échanger les devises",
+                selectSourceCurrency: "Sélectionner la devise source",
+                selectTargetCurrency: "Sélectionner la devise cible",
+                
+                // Features Section
+                realTimeData: "Données de Devises en Temps Réel",
+                realTimeDataDesc: "Accédez aux taux en direct pour plus de 180 devises et 50 cryptomonnaies, mis à jour chaque minute.",
+                multiCurrencyCalc: "Calculateur Multi-Devises",
+                multiCurrencyCalcDesc: "Inclut des données historiques de taux de change pour une prise de décision plus intelligente et des comparaisons.",
+                voiceRecognitionFeature: "Reconnaissance Vocale",
+                voiceRecognitionFeatureDesc: "Convertissez les devises sans les mains avec un traitement avancé de la parole en texte.",
+                aiPoweredConversion: "Conversion Propulsée par l'IA",
+                aiPoweredConversionDesc: "Utilise l'apprentissage automatique pour des analyses prédictives et des suggestions intelligentes.",
+                responsiveDesign: "Design Responsive",
+                responsiveDesignDesc: "Passez facilement entre les appareils avec une mise en page entièrement responsive et des applications mobiles.",
+                restfulAPI: "API RESTful",
+                restfulAPIDesc: "Intégrez nos puissants services de devises dans vos propres applications facilement.",
+                historicalData: "Analyses de Données Historiques",
+                historicalDataDesc: "Analysez les tendances des données historiques pour prendre des décisions financières éclairées.",
+                emailAlerts: "Alertes par Email",
+                emailAlertsDesc: "Recevez des alertes en temps réel sur les fluctuations de devises et les taux de conversion.",
+                customizableDashboard: "Tableau de Bord Personnalisable",
+                customizableDashboardDesc: "Personnalisez votre tableau de bord pour voir les devises et les métriques qui vous importent.",
+                
+                // About Section
+                aboutTitle: "Currency Vision Pro",
+                aboutSubtitle: "Transformer les Expériences Mondiales de Devises",
+                aboutDescription: "Nous sommes pionniers dans l'avenir de la conversion de devises grâce à une technologie innovante et un design centré sur l'utilisateur. Notre plateforme comble les écarts financiers, donnant aux utilisateurs les moyens d'accéder à des solutions de devises en temps réel, précises et intelligentes.",
+                ourMission: "Notre Mission",
+                ourMissionDesc: "Démocratiser l'information financière et rendre la conversion de devises fluide et accessible à tous.",
+                globalReach: "Portée Mondiale",
+                globalReachDesc: "Supportant plus de 180 devises et servant les utilisateurs dans plus de 50 pays avec une technologie de pointe.",
+                innovation: "Innovation",
+                innovationDesc: "Évoluant continuellement avec l'IA, l'apprentissage automatique et les technologies de traitement de données en temps réel.",
+                meetOurInnovators: "Rencontrez Nos Innovateurs",
+                leadDeveloper: "Développeur Principal",
+                frontendDeveloper: "Développeur Frontend",
+                backendDeveloper: "Développeur Backend",
+                
+                // Footer
+                allRightsReserved: "Tous droits réservés.",
+                privacyPolicy: "Politique de Confidentialité",
+                termsOfService: "Conditions d'Utilisation"
+            },
+            de: {
+                // Navigation
+                home: "Startseite",
+                features: "Funktionen",
+                converter: "Währungsrechner",
+                about: "Über uns",
+                logout: "Abmelden",
+                darkMode: "Dunkelmodus",
+                language: "Sprache",
+                quietMode: "Stiller Modus",
+                
+                // Home Section
+                homeTitle: "Currency Vision Pro",
+                homeSubtitle: "Erleben Sie die Zukunft der Währungsumrechnung mit Echtzeit-Kursen, fortschrittlicher Technologie und globaler Abdeckung.",
+                globalCoverage: "Globale Abdeckung",
+                globalCoverageDesc: "Zugriff auf Wechselkurse für über 180 Währungen und 50 Kryptowährungen weltweit.",
+                voiceRecognition: "Spracherkennung",
+                voiceRecognitionDesc: "Konvertieren Sie Währungen berührungslos mit unserer fortschrittlichen Spracherkennungstechnologie.",
+                cameraOCR: "Kamera OCR",
+                cameraOCRDesc: "Scannen Sie Banknoten oder Text, um Beträge sofort für die Umrechnung einzugeben.",
+                realTimeUpdates: "Echtzeit-Updates",
+                realTimeUpdatesDesc: "Erhalten Sie die neuesten Wechselkurse, die jede Minute aktualisiert werden.",
+                aiInsights: "KI-gestützte Einblicke",
+                aiInsightsDesc: "Maschinelle Lernalgorithmen liefern prädiktive Analysen und intelligente Empfehlungen.",
+                trendAnalysis: "Trendanalyse",
+                trendAnalysisDesc: "Analysieren Sie historische Trends und treffen Sie fundierte Finanzentscheidungen.",
+                
+                // Global Impact Section
+                globalImpact: "Unser Globaler Einfluss",
+                currenciesSupported: "Unterstützte Währungen",
+                cryptocurrenciesIncluded: "Eingeschlossene Kryptowährungen",
+                usersWorldwide: "Nutzer Weltweit",
+                customerSupport: "Kundensupport",
+                
+                // Converter Section
+                currencyConverter: "Währungsrechner",
+                converterSubtitle: "Eleganter, präziser und globaler Währungsumrechner",
+                enterAmount: "Betrag eingeben",
+                convert: "Umrechnen",
+                scanUpload: "Scannen/Hochladen",
+                swapCurrencies: "Währungen tauschen",
+                selectSourceCurrency: "Quellwährung auswählen",
+                selectTargetCurrency: "Zielwährung auswählen",
+                
+                // Features Section
+                realTimeData: "Echtzeit-Währungsdaten",
+                realTimeDataDesc: "Zugriff auf Live-Kurse für über 180 Währungen und 50 Kryptowährungen, jede Minute aktualisiert.",
+                multiCurrencyCalc: "Multi-Währungsrechner",
+                multiCurrencyCalcDesc: "Enthält historische Wechselkursdaten für intelligentere Entscheidungen und Vergleiche.",
+                voiceRecognitionFeature: "Spracherkennung",
+                voiceRecognitionFeatureDesc: "Konvertieren Sie Währungen berührungslos mit fortschrittlicher Sprach-zu-Text-Verarbeitung.",
+                aiPoweredConversion: "KI-gestützte Umrechnung",
+                aiPoweredConversionDesc: "Nutzt maschinelles Lernen für prädiktive Analysen und intelligente Vorschläge.",
+                responsiveDesign: "Responsives Design",
+                responsiveDesignDesc: "Wechseln Sie nahtlos zwischen Geräten mit einem vollständig responsiven Layout und mobilen Apps.",
+                restfulAPI: "RESTful API",
+                restfulAPIDesc: "Integrieren Sie unsere leistungsstarken Währungsdienste einfach in Ihre eigenen Anwendungen.",
+                historicalData: "Historische Datenanalyse",
+                historicalDataDesc: "Analysieren Sie historische Datentrends für fundierte Finanzentscheidungen.",
+                emailAlerts: "E-Mail-Benachrichtigungen",
+                emailAlertsDesc: "Erhalten Sie Echtzeit-Benachrichtigungen zu Währungsschwankungen und Umrechnungskursen.",
+                customizableDashboard: "Anpassbares Dashboard",
+                customizableDashboardDesc: "Passen Sie Ihr Dashboard an, um die Währungen und Metriken zu sehen, die für Sie wichtig sind.",
+                
+                // About Section
+                aboutTitle: "Currency Vision Pro",
+                aboutSubtitle: "Transformation Globaler Währungserfahrungen",
+                aboutDescription: "Wir sind Pioniere in der Zukunft der Währungsumrechnung durch innovative Technologie und nutzerzentriertes Design. Unsere Plattform überbrückt finanzielle Lücken und ermöglicht Nutzern Echtzeit-, präzise und intelligente Währungslösungen.",
+                ourMission: "Unsere Mission",
+                ourMissionDesc: "Finanzinformationen demokratisieren und Währungsumrechnung für alle nahtlos und zugänglich machen.",
+                globalReach: "Globale Reichweite",
+                globalReachDesc: "Unterstützung von über 180 Währungen und Bedienung von Nutzern in über 50 Ländern mit Spitzentechnologie.",
+                innovation: "Innovation",
+                innovationDesc: "Kontinuierliche Weiterentwicklung mit KI, maschinellem Lernen und Echtzeit-Datenverarbeitungstechnologien.",
+                meetOurInnovators: "Treffen Sie unsere Innovatoren",
+                leadDeveloper: "Leitender Entwickler",
+                frontendDeveloper: "Frontend-Entwickler",
+                backendDeveloper: "Backend-Entwickler",
+                
+                // Footer
+                allRightsReserved: "Alle Rechte vorbehalten.",
+                privacyPolicy: "Datenschutzrichtlinie",
+                termsOfService: "Nutzungsbedingungen"
+            }
+        };
+
+        // Function to change language
+        function changeLanguage(lang) {
+            document.documentElement.lang = lang;
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update placeholders
+            const placeholders = document.querySelectorAll('[data-translate-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Update titles
+            const titles = document.querySelectorAll('[data-translate-title]');
+            titles.forEach(element => {
+                const key = element.getAttribute('data-translate-title');
+                if (translations[lang] && translations[lang][key]) {
+                    element.title = translations[lang][key];
+                }
+            });
+            
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            const languageSelect = document.querySelector('.language-select');
+            if (languageSelect) {
+                languageSelect.value = savedLang;
+            }
+            changeLanguage(savedLang);
+        });
+    </script>
+</head>
+<body>
+   <header>
+    <div class="logo-container">
+           <a href="#" onclick="showSection('home')">
+    <img class="logo" src="pictures/hd5.jpg" alt="Currency Vision Pro Logo">
+        </a>
+       </div>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+       <nav>
+           <ul>
+      <li>
+                   <a href="#" onclick="showSection('home')" class="active" data-translate="home">
+                       <i class="fas fa-home"></i> Home
+        </a>
+      </li>
+      <li>
+                   <a href="#" onclick="showSection('features')" data-translate="features">
+                       <i class="fas fa-star"></i> Features
+        </a>
+      </li>
+      <li>
+                   <a href="#" onclick="showSection('converter')" data-translate="converter">
+                       <i class="fas fa-exchange-alt"></i> Converter
+        </a>
+      </li>
+      <li>
+                   <a href="#" onclick="showSection('about')" data-translate="about">
+                       <i class="fas fa-info-circle"></i> About
+        </a>
+      </li>
+               <li>
+                   <a href="#" onclick="logout()" data-translate="logout">
+                       <i class="fas fa-sign-out-alt"></i> Logout
+                   </a>
+               </li>
+               <li>
+                   <a href="#" onclick="toggleDarkMode()" data-translate="darkMode">
+                       <i class="fas fa-moon"></i> Dark Mode
+                   </a>
+               </li>
+               <li>
+                   <select onchange="changeLanguage(this.value)" class="language-select" title="Select interface language">
+                       <option value="en">English</option>
+                       <option value="es">Español</option>
+                       <option value="fr">Français</option>
+                       <option value="de">Deutsch</option>
+                   </select>
+               </li>
+    </ul>
+  </nav>
+</header>
+
+    <div class="container">
+  <!-- Home section -->
+<section id="home" class="section active">
+    <div class="home-intro">
+        <h1 data-translate="homeTitle">Currency Vision Pro</h1>
+        <p data-translate="homeSubtitle">Experience the future of currency conversion with real-time rates, advanced technology, and global coverage.</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature-item">
+            <div class="feature-icon">🌐</div>
+            <h3 data-translate="globalCoverage">Global Coverage</h3>
+            <p data-translate="globalCoverageDesc">Access exchange rates for over 180 currencies and 50 cryptocurrencies worldwide.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🔊</div>
+            <h3 data-translate="voiceRecognition">Voice Recognition</h3>
+            <p data-translate="voiceRecognitionDesc">Convert currencies hands-free with our advanced voice recognition technology.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">📷</div>
+            <h3 data-translate="cameraOCR">Camera OCR</h3>
+            <p data-translate="cameraOCRDesc">Scan currency notes or text to instantly input amounts for conversion.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">⚡</div>
+            <h3 data-translate="realTimeUpdates">Real-time Updates</h3>
+            <p data-translate="realTimeUpdatesDesc">Get the latest exchange rates updated every minute.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">🤖</div>
+            <h3 data-translate="aiInsights">AI-Powered Insights</h3>
+            <p data-translate="aiInsightsDesc">Machine learning algorithms provide predictive analytics and smart recommendations.</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">📈</div>
+            <h3 data-translate="trendAnalysis">Trend Analysis</h3>
+            <p data-translate="trendAnalysisDesc">Analyze historical trends and make informed financial decisions.</p>
+        </div>
+    </div>
+
+    <div class="achievements-section">
+        <h2 data-translate="globalImpact">Our Global Impact</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>180+</h3>
+                <p data-translate="currenciesSupported">Currencies Supported</p>
+                <div class="stat-icon">🌍</div>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p data-translate="cryptocurrenciesIncluded">Cryptocurrencies Included</p>
+                <div class="stat-icon">💱</div>
+            </div>
+            <div class="stat-item">
+                <h3>1M+</h3>
+                <p data-translate="usersWorldwide">Users Worldwide</p>
+                <div class="stat-icon">👥</div>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p data-translate="customerSupport">Customer Support</p>
+                <div class="stat-icon">🤝</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <!-- Unique & Classic Currency Converter Section -->
+        <section id="converter" class="section">
+          <div class="converter classic-glass-card">
+            <div class="classic-header">
+              <h2 data-translate="currencyConverter">Currency Converter</h2>
+              <p class="classic-subtitle" data-translate="converterSubtitle">Elegant, accurate, and global currency conversion</p>
+            </div>
+            
+            <div class="converter-left">
+              <form class="classic-form" autocomplete="off" onsubmit="return false;">
+                <div class="classic-currency-row">
+                  <div class="classic-currency-select-group">
+                    <select id="fromCurrency" class="classic-currency-select" title="Select source currency" data-translate-title="selectSourceCurrency">
+                      <option value="USD">USD - US Dollar</option>
+                      <option value="EUR">EUR - Euro</option>
+                      <option value="GBP">GBP - British Pound</option>
+                      <option value="JPY">JPY - Japanese Yen</option>
+                      <option value="CAD">CAD - Canadian Dollar</option>
+                      <option value="AUD">AUD - Australian Dollar</option>
+                      <option value="CHF">CHF - Swiss Franc</option>
+                      <option value="CNY">CNY - Chinese Yuan</option>
+                      <option value="GHS">GHS - Ghanaian Cedi</option>
+                      <option value="NGN">NGN - Nigerian Naira</option>
+                      <option value="ZAR">ZAR - South African Rand</option>
+                      <option value="INR">INR - Indian Rupee</option>
+                      <option value="BRL">BRL - Brazilian Real</option>
+                      <option value="RUB">RUB - Russian Ruble</option>
+                      <option value="MXN">MXN - Mexican Peso</option>
+                      <option value="KRW">KRW - South Korean Won</option>
+                      <option value="SGD">SGD - Singapore Dollar</option>
+                      <option value="NZD">NZD - New Zealand Dollar</option>
+                      <option value="TRY">TRY - Turkish Lira</option>
+                      <option value="HKD">HKD - Hong Kong Dollar</option>
+                      <option value="SEK">SEK - Swedish Krona</option>
+                      <option value="NOK">NOK - Norwegian Krone</option>
+                      <option value="DKK">DKK - Danish Krone</option>
+                      <option value="PLN">PLN - Polish Złoty</option>
+                      <option value="THB">THB - Thai Baht</option>
+                      <option value="IDR">IDR - Indonesian Rupiah</option>
+                      <option value="PHP">PHP - Philippine Peso</option>
+                      <option value="MYR">MYR - Malaysian Ringgit</option>
+                      <option value="PKR">PKR - Pakistani Rupee</option>
+                      <option value="ILS">ILS - Israeli Shekel</option>
+                      <option value="AED">AED - UAE Dirham</option>
+                      <option value="SAR">SAR - Saudi Riyal</option>
+                      <option value="QAR">QAR - Qatari Riyal</option>
+                      <option value="KWD">KWD - Kuwaiti Dinar</option>
+                      <option value="DOGE">DOGE - Dogecoin</option>
+                      <option value="USDT">USDT - Tether</option>
+                      <option value="TRX">TRX - Tron</option>
+                      <option value="BSV">BSV - Bitcoin SV</option>
+                      <option value="ETC">ETC - Ethereum Classic</option>
+                      <option value="QTUM">QTUM - Qtum</option>
+                      <option value="VET">VET - VeChain</option>
+                      <option value="ZIL">ZIL - Zilliqa</option>
+                      <option value="WAVES">WAVES - Waves</option>
+                    </select>
+                  </div>
+                  <button type="button" class="classic-swap-btn" title="Swap currencies" data-translate-title="swapCurrencies">
+                    <i class="fas fa-sync-alt"></i>
+                  </button>
+                  <div class="classic-currency-select-group">
+                    <select id="toCurrency" class="classic-currency-select" title="Select target currency" data-translate-title="selectTargetCurrency">
+                      <option value="USD">USD - US Dollar</option>
+                      <option value="EUR">EUR - Euro</option>
+                      <option value="GBP">GBP - British Pound</option>
+                      <option value="JPY">JPY - Japanese Yen</option>
+                      <option value="CAD">CAD - Canadian Dollar</option>
+                      <option value="AUD">AUD - Australian Dollar</option>
+                      <option value="CHF">CHF - Swiss Franc</option>
+                      <option value="CNY">CNY - Chinese Yuan</option>
+                      <option value="GHS">GHS - Ghanaian Cedi</option>
+                      <option value="NGN">NGN - Nigerian Naira</option>
+                      <option value="ZAR">ZAR - South African Rand</option>
+                      <option value="INR">INR - Indian Rupee</option>
+                      <option value="BRL">BRL - Brazilian Real</option>
+                      <option value="RUB">RUB - Russian Ruble</option>
+                      <option value="MXN">MXN - Mexican Peso</option>
+                      <option value="KRW">KRW - South Korean Won</option>
+                      <option value="SGD">SGD - Singapore Dollar</option>
+                      <option value="NZD">NZD - New Zealand Dollar</option>
+                      <option value="TRY">TRY - Turkish Lira</option>
+                      <option value="HKD">HKD - Hong Kong Dollar</option>
+                      <option value="SEK">SEK - Swedish Krona</option>
+                      <option value="NOK">NOK - Norwegian Krone</option>
+                      <option value="DKK">DKK - Danish Krone</option>
+                      <option value="PLN">PLN - Polish Złoty</option>
+                      <option value="THB">THB - Thai Baht</option>
+                      <option value="IDR">IDR - Indonesian Rupiah</option>
+                      <option value="PHP">PHP - Philippine Peso</option>
+                      <option value="MYR">MYR - Malaysian Ringgit</option>
+                      <option value="PKR">PKR - Pakistani Rupee</option>
+                      <option value="ILS">ILS - Israeli Shekel</option>
+                      <option value="AED">AED - UAE Dirham</option>
+                      <option value="SAR">SAR - Saudi Riyal</option>
+                      <option value="QAR">QAR - Qatari Riyal</option>
+                      <option value="KWD">KWD - Kuwaiti Dinar</option>
+                      <option value="DOGE">DOGE - Dogecoin</option>
+                      <option value="USDT">USDT - Tether</option>
+                      <option value="TRX">TRX - Tron</option>
+                      <option value="BSV">BSV - Bitcoin SV</option>
+                      <option value="ETC">ETC - Ethereum Classic</option>
+                      <option value="QTUM">QTUM - Qtum</option>
+                      <option value="VET">VET - VeChain</option>
+                      <option value="ZIL">ZIL - Zilliqa</option>
+                      <option value="WAVES">WAVES - Waves</option>      
+                    </select>
+                  </div>
+                </div>
+                <div class="classic-amount-row">
+                  <span class="classic-amount-symbol" id="fromSymbol">$</span>
+                  <input type="number" id="amount" class="classic-amount-input" placeholder="Enter amount" min="0" step="any" data-translate-placeholder="enterAmount" />
+                  <button class="classic-scan-btn" type="button" onclick="openCaptureOptions()" title="Scan/Upload" data-translate-title="scanUpload"><span class="scan-icon">📷</span></button>
+                </div>
+                <div class="voice-input-container">
+                  <button class="voice-btn" onclick="startVoiceRecognition()" title="Voice Input">
+                    <i class="fas fa-microphone"></i>
+                  </button>
+                  <div class="voice-status" id="voiceStatus"></div>
+                </div>
+                <button id="convertButton" class="classic-convert-btn" type="submit" data-translate="convert">Convert</button>
+              </form>
+              <div class="classic-result" id="result"></div>
+            </div>
+
+            <div class="converter-right">
+              <div class="classic-trendResult" id="trendResult">
+                <div class="trend-header">
+                  <div class="trend-pair-info">
+                    <span id="trendPair">USD/EUR</span>
+                    <span id="trendChange" class="trend-up">+1.2%</span>
+                  </div>
+                  <div class="trend-period-selector">
+                    <button class="period-btn active" data-period="7d">7D</button>
+                    <button class="period-btn" data-period="1m">1M</button>
+                    <button class="period-btn" data-period="3m">3M</button>
+                    <button class="period-btn" data-period="1y">1Y</button>
+                  </div>
+                </div>
+                <div class="trend-chart-container">
+                  <canvas id="trendChart" height="180"></canvas>
+                </div>
+                <div class="trend-stats">
+                  <div class="trend-stat-item">
+                    <span class="stat-label">Current</span>
+                    <span class="stat-value" id="currentRate">0.92</span>
+                  </div>
+                  <div class="trend-stat-item">
+                    <span class="stat-label">High</span>
+                    <span class="stat-value" id="trendHigh">0.94</span>
+                  </div>
+                  <div class="trend-stat-item">
+                    <span class="stat-label">Low</span>
+                    <span class="stat-value" id="trendLow">0.91</span>
+                  </div>
+                  <div class="trend-stat-item">
+                    <span class="stat-label">Change</span>
+                    <span class="stat-value" id="trendChangeValue">+1.2%</span>
+                  </div>
+                </div>
+                <div class="trend-summary" id="trendSummary">
+                  <div class="summary-header">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Market Analysis</span>
+                  </div>
+                  <p>The USD has been rising steadily against the EUR this week, showing strong momentum with increasing trading volume.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="classic-footer">
+              <span class="classic-rate" id="rateInfo"></span>
+              <span class="classic-updated" id="lastUpdated"></span>
+            </div>
+          </div>
+        </section>
+<script>if (typeof startVoiceRecognition === 'function') startVoiceRecognition();</script>
+
+        <!-- Features section -->
+<section id="features" class="section">
+    <div class="features-container">
+        <div class="feature-item">
+            <span>💱</span>
+            <h3 data-translate="realTimeData">Real-Time Currency Data</h3>
+            <p data-translate="realTimeDataDesc">Access live rates for 180+ currencies and 50 cryptocurrencies, updated every minute.</p>
+        </div>
+        <div class="feature-item">
+            <span>📊</span>
+            <h3 data-translate="multiCurrencyCalc">Multi-Currency Calculator</h3>
+            <p data-translate="multiCurrencyCalcDesc">Includes historical exchange rate data for smarter decision-making and comparisons.</p>
+        </div>
+        <div class="feature-item">
+            <span>🎤</span>
+            <h3 data-translate="voiceRecognitionFeature">Voice Recognition</h3>
+            <p data-translate="voiceRecognitionFeatureDesc">Convert currencies hands-free with advanced speech-to-text processing.</p>
+        </div>
+        <div class="feature-item">
+            <span>🤖</span>
+            <h3 data-translate="aiPoweredConversion">AI-Powered Conversion</h3>
+            <p data-translate="aiPoweredConversionDesc">Leverages machine learning for predictive analytics and smart suggestions.</p>
+        </div>
+        <div class="feature-item">
+            <span>📱</span>
+            <h3 data-translate="responsiveDesign">Responsive Design</h3>
+            <p data-translate="responsiveDesignDesc">Seamlessly switch between devices with a fully responsive layout and mobile apps.</p>
+        </div>
+        <div class="feature-item">
+            <span>🔗</span>
+            <h3 data-translate="restfulAPI">RESTful API</h3>
+            <p data-translate="restfulAPIDesc">Integrate our powerful currency services into your own applications with ease.</p>
+        </div>
+        <div class="feature-item">
+            <span>📅</span>
+            <h3 data-translate="historicalData">Historical Data Insights</h3>
+            <p data-translate="historicalDataDesc">Analyze historical data trends to make informed financial decisions.</p>
+        </div>
+        <div class="feature-item">
+            <span>📧</span>
+            <h3 data-translate="emailAlerts">Email Alerts</h3>
+            <p data-translate="emailAlertsDesc">Receive real-time alerts on currency fluctuations and conversion rates.</p>
+        </div>
+        <div class="feature-item">
+            <span>🛠️</span>
+            <h3 data-translate="customizableDashboard">Customizable Dashboard</h3>
+            <p data-translate="customizableDashboardDesc">Personalize your dashboard to see the currencies and metrics that matter to you.</p>
+        </div>
+    </div>
+</section>
+
+       <!-- About section -->
+<section id="about" class="section">
+    <div class="about-container">
+        <div class="about-header">
+            <h2 class="about-title" data-translate="aboutTitle">Currency Vision Pro</h2>
+            <p class="about-subtitle" data-translate="aboutSubtitle">Transforming Global Currency Experiences</p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-description">
+                <p data-translate="aboutDescription">We are pioneering the future of currency conversion through innovative technology and user-centric design. Our platform bridges financial gaps, empowering users with real-time, accurate, and intelligent currency solutions.</p>
+            </div>
+            
+            <div class="about-features-grid">
+                <div class="about-feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 data-translate="ourMission">Our Mission</h3>
+                    <p data-translate="ourMissionDesc">Democratize financial information and make currency conversion seamless and accessible for everyone.</p>
+                </div>
+                <div class="about-feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 data-translate="globalReach">Global Reach</h3>
+                    <p data-translate="globalReachDesc">Supporting 180+ currencies and serving users across 50+ countries with cutting-edge technology.</p>
+                </div>
+                <div class="about-feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3 data-translate="innovation">Innovation</h3>
+                    <p data-translate="innovationDesc">Continuously evolving with AI, machine learning, and real-time data processing technologies.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-section">
+          <h3 class="team-title" data-translate="meetOurInnovators">Meet Our Innovators</h3>
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-img-wrap">
+                <img src="pictures/hd3.jpeg" alt="Opoku Emmanuel Kwadwo">
+              </div>
+              <div class="team-info">
+                <h4>Opoku Emmanuel Kwadwo</h4>
+                <p class="team-role" data-translate="leadDeveloper">Lead Developer</p>
+                <div class="team-social">
+                  <a href="https://www.linkedin.com/in/opoku-emmanuel-kwadwo-673112294/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                  <a href="https://wa.me/+23354811114" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-img-wrap">
+                <img src="pictures/hd.jpeg" alt="Hadassah Afi Koleki Ocquaye">
+              </div>
+              <div class="team-info">
+                <h4>Hadassah Afi Koleki Ocquaye</h4>
+                <p class="team-role" data-translate="frontendDeveloper">Frontend Developer</p>
+                <div class="team-social">
+                  <a href="https://www.linkedin.com/in/hadassah" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                  <a href="https://wa.me/+233593807799" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-img-wrap">
+                <img src="pictures/hd2.jpeg" alt="Gideon Mensah Marfo">
+              </div>
+              <div class="team-info">
+                <h4>Gideon Mensah Marfo</h4>
+                <p class="team-role" data-translate="backendDeveloper">Backend Developer</p>
+                <div class="team-social">
+                  <a href="https://www.linkedin.com/in/gideon" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                  <a href="https://wa.me/+233257586578" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+
+<section class="recommendation-section">
+    <div class="recommendation-card">
+        <div class="recommendation-header">
+            <div class="recommendation-icon">
+                <!-- Add your icon here -->
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3 class="recommendation-title">Smart Recommendation</h3>
+        </div>
+        
+        <div class="recommendation-content">
+            <p class="recommendation-text">
+                Based on current market trends and your preferences, we recommend the following strategy for optimal results.
+            </p>
+            
+            <div class="recommendation-metrics">
+                <div class="metric-item">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="metric-info">
+                        <div class="metric-value">85%</div>
+                        <div class="metric-label">Success Rate</div>
+                    </div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="metric-info">
+                        <div class="metric-value">24h</div>
+                        <div class="metric-label">Time to Impact</div>
+                    </div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="metric-info">
+                        <div class="metric-value">High</div>
+                        <div class="metric-label">Confidence Level</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="recommendation-actions">
+                <button class="action-button primary">
+                    <i class="fas fa-check"></i>
+                    Apply Recommendation
+                </button>
+                <button class="action-button secondary">
+                    <i class="fas fa-info-circle"></i>
+                    Learn More
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+    </div>
+
+<footer>
+    <p>&copy; 2024 Currency Vision Pro. <span data-translate="allRightsReserved">All rights reserved.</span></p>
+    <p>
+        <a href="#" style="color: white; text-decoration: underline;" data-translate="privacyPolicy">Privacy Policy</a> | 
+        <a href="#" style="color: white; text-decoration: underline;" data-translate="termsOfService">Terms of Service</a> | 
+        <a href="#" style="color: white; text-decoration: underline;"><i class="fab fa-facebook"></i></a> | 
+        <a href="#" style="color: white; text-decoration: underline;"><i class="fab fa-twitter"></i></a> | 
+        <a href="#" style="color: white; text-decoration: underline;"><i class="fab fa-instagram"></i></a>
+    </p>
+</footer>
+    <script src="animationDropdown.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="currencyAPI.js"></script>
+    <script>
+    async function updateTrendData(period = '7d') {
+        const from = document.getElementById('fromCurrency').value;
+        const to = document.getElementById('toCurrency').value;
+        const end = new Date();
+        const start = new Date();
+        
+        switch(period) {
+            case '1m':
+                start.setMonth(end.getMonth() - 1);
+                break;
+            case '3m':
+                start.setMonth(end.getMonth() - 3);
+                break;
+            case '1y':
+                start.setFullYear(end.getFullYear() - 1);
+                break;
+            default:
+                start.setDate(end.getDate() - 6);
+        }
+
+        const startStr = start.toISOString().split('T')[0];
+        const endStr = end.toISOString().split('T')[0];
+
+        try {
+            const res = await fetch(`https://api.exchangerate.host/timeseries?start_date=${startStr}&end_date=${endStr}&base=${from}&symbols=${to}`);
+            const data = await res.json();
+            
+            if (!data.rates) return;
+
+            const dates = Object.keys(data.rates).sort();
+            const rates = dates.map(date => data.rates[date][to]);
+            const currentRate = rates[rates.length - 1];
+            const high = Math.max(...rates);
+            const low = Math.min(...rates);
+            const change = ((currentRate - rates[0]) / rates[0]) * 100;
+            const trendUp = change >= 0;
+
+            document.getElementById('trendPair').textContent = `${from}/${to}`;
+            document.getElementById('currentRate').textContent = currentRate.toFixed(4);
+            document.getElementById('trendHigh').textContent = high.toFixed(4);
+            document.getElementById('trendLow').textContent = low.toFixed(4);
+            document.getElementById('trendChangeValue').textContent = (trendUp ? '+' : '') + change.toFixed(2) + '%';
+            document.getElementById('trendChangeValue').className = trendUp ? 'trend-up' : 'trend-down';
+            
+            const summary = document.getElementById('trendSummary').querySelector('p');
+            summary.textContent = generateTrendSummary(from, to, change, period);
+
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            if (window.trendChartInstance) window.trendChartInstance.destroy();
+            
+            window.trendChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates.map(date => formatDate(date, period)),
+                    datasets: [{
+                        data: rates,
+                        borderColor: trendUp ? '#4caf50' : '#cf6679',
+                        backgroundColor: trendUp ? 'rgba(76, 175, 80, 0.1)' : 'rgba(207, 102, 121, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        borderWidth: 2,
+                        pointHoverRadius: 6,
+                        pointHoverBackgroundColor: trendUp ? '#4caf50' : '#cf6679',
+                        pointHoverBorderColor: '#ffffff',
+                        pointHoverBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(30,30,40,0.95)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#e5e7eb',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.parsed.y.toFixed(4)} ${to}`;
+                                },
+                                title: function(context) {
+                                    return formatDate(context[0].label, period);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#9ca3af',
+                                maxRotation: 0,
+                                autoSkip: true,
+                                maxTicksLimit: 6,
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        y: {
+                            grid: { 
+                                color: 'rgba(59,130,246,0.1)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#9ca3af',
+                                callback: function(value) {
+                                    return value.toFixed(4);
+                                },
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false,
+                        animationDuration: 200
+                    }
+                }
+            });
+        } catch (e) {
+            console.error('Error fetching trend data:', e);
+        }
+    }
+
+    function formatDate(dateStr, period) {
+        const date = new Date(dateStr);
+        switch(period) {
+            case '1y':
+                return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+            case '3m':
+            case '1m':
+                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            default:
+                return date.toLocaleDateString('en-US', { weekday: 'short' });
+        }
+    }
+
+    function generateTrendSummary(from, to, change, period) {
+        const periodText = {
+            '7d': 'this week',
+            '1m': 'this month',
+            '3m': 'the last three months',
+            '1y': 'this year'
+        }[period];
+
+        const strength = Math.abs(change);
+        let trendDescription = '';
+        
+        if (strength < 1) {
+            trendDescription = 'showing minimal movement';
+        } else if (strength < 3) {
+            trendDescription = 'showing moderate movement';
+        } else if (strength < 5) {
+            trendDescription = 'showing significant movement';
+        } else {
+            trendDescription = 'showing strong momentum';
+        }
+
+        return `The ${from} has ${change >= 0 ? 'strengthened' : 'weakened'} against the ${to} ${periodText}, ${trendDescription}.`;
+    }
+
+    document.querySelectorAll('.period-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            updateTrendData(btn.dataset.period);
+        });
+    });
+
+    document.getElementById('fromCurrency').addEventListener('change', () => updateTrendData());
+    document.getElementById('toCurrency').addEventListener('change', () => updateTrendData());
+
+    window.addEventListener('DOMContentLoaded', () => updateTrendData());
+    </script>
+    <!-- Classic Converter CSS -->
+    <style>
+    .classic-glass-card {
+      background: #23264a;
+      border-radius: 32px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+      padding: 44px 32px 36px 32px;
+      max-width: 900px;
+      margin: 56px auto 0 auto;
+      position: relative;
+      backdrop-filter: blur(16px) saturate(1.2);
+      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      border: 2.5px solid #3b82f6;
+      color: #ffffff;
+      font-family: 'Poppins', 'Georgia', serif;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .converter-left {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .converter-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      border-left: 1px solid rgba(59,130,246,0.3);
+      padding-left: 32px;
+    }
+
+    .classic-header {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 0;
+    }
+
+    .classic-header h2 {
+      font-size: 2.2rem;
+      font-family: 'Georgia', serif;
+      font-weight: 700;
+      margin: 0 0 2px 0;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+    }
+
+    .classic-subtitle {
+      font-size: 1.08rem;
+      color: #93c5fd;
+      margin: 0 0 10px 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .classic-form {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .classic-currency-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+    }
+
+    .classic-currency-select-group {
+      flex: 1;
+    }
+
+    .classic-swap-btn {
+      position: relative;
+      transform: none;
+      background: linear-gradient(135deg, #3b82f6 60%, #93c5fd 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(59,130,246,0.2);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .classic-swap-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+    }
+
+    .classic-swap-btn:active {
+      transform: scale(0.95);
+    }
+
+    .classic-swap-btn i {
+      font-size: 1.2rem;
+    }
+
+    .classic-amount-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    .classic-amount-symbol {
+      font-size: 1.4rem;
+      color: #3b82f6;
+      font-weight: 700;
+      margin-right: 2px;
+      font-family: 'Georgia', serif;
+    }
+
+    .classic-amount-input {
+      flex: 1 1 0;
+      padding: 14px 22px;
+      border-radius: 22px;
+      border: 2px solid #3b82f6;
+      font-size: 1.15rem;
+      background: rgba(255,255,255,0.10);
+      color: #fff !important;
+      font-family: 'Poppins', 'Georgia', serif;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background 0.2s, box-shadow 0.2s, border 0.2s;
+    }
+
+    .classic-amount-input:focus {
+      outline: 2px solid #3b82f6;
+      background: rgba(59,130,246,0.10);
+      border: 2px solid #93c5fd;
+    }
+
+    .classic-scan-btn {
+      background: rgba(255,255,255,0.10);
+      color: #3b82f6;
+      border: 2px solid #3b82f6;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 6px;
+      box-shadow: 0 2px 8px rgba(59,130,246,0.2);
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, border 0.2s;
+    }
+
+    .classic-scan-btn:active { background: #3b82f6; color: #fff; }
+
+    .classic-convert-btn {
+      background: linear-gradient(135deg, #3b82f6 60%, #93c5fd 100%);
+      color: #fff;
+      border: none;
+      border-radius: 22px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 16px 32px;
+      margin-top: 10px;
+      box-shadow: 0 2px 8px rgba(59,130,246,0.2);
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      font-family: 'Georgia', serif;
+      width: auto;
+      min-width: 200px;
+    }
+
+    .classic-convert-btn:active { background: #93c5fd; color: #fff; }
+
+    .classic-result {
+      margin: 0;
+      font-size: 2rem;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 700;
+      font-family: 'Georgia', serif;
+      min-height: 36px;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 8px rgba(59,130,246,0.2);
+      transition: color 0.2s;
+      padding: 20px;
+      background: rgba(59,130,246,0.1);
+      border-radius: 16px;
+    }
+
+    .classic-trendResult {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #e5e7eb;
+      text-align: center;
+      font-style: italic;
+      font-family: 'Georgia', serif;
+      min-height: 24px;
+      background: rgba(30,30,40,0.85);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(59,130,246,0.2);
+    }
+
+    .trend-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .trend-pair-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #trendPair {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    #trendChange {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .trend-up {
+      background: rgba(76, 175, 80, 0.1);
+      color: #4caf50;
+    }
+
+    .trend-down {
+      background: rgba(207, 102, 121, 0.1);
+      color: #cf6679;
+    }
+
+    .trend-period-selector {
+      display: flex;
+      gap: 4px;
+    }
+
+    .period-btn {
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      color: #e5e7eb;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .period-btn:hover {
+      background: rgba(59,130,246,0.2);
+    }
+
+    .period-btn.active {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+
+    .trend-chart-container {
+      background: rgba(30,30,40,0.5);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+      height: 180px;
+    }
+
+    .trend-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .trend-stat-item {
+      background: rgba(59,130,246,0.05);
+      padding: 8px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .trend-summary {
+      background: rgba(59,130,246,0.05);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .summary-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: #3b82f6;
+      font-weight: 500;
+    }
+
+    .trend-summary p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #e5e7eb;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .trend-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .trend-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      
+      .trend-period-selector {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+    </style>
+    <script>
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        // Initialize dark mode on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+        });
+
+    document.querySelector('.classic-swap-btn').addEventListener('click', function() {
+      const fromCurrency = document.getElementById('fromCurrency');
+      const toCurrency = document.getElementById('toCurrency');
+      const temp = fromCurrency.value;
+      fromCurrency.value = toCurrency.value;
+      toCurrency.value = temp;
+      
+      // Trigger change event to update any dependent elements
+      fromCurrency.dispatchEvent(new Event('change'));
+      toCurrency.dispatchEvent(new Event('change'));
+    });
+    </script>
+</body>
+</html>
